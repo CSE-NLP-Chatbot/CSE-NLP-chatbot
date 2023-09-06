@@ -11,7 +11,7 @@ idna==3.4
 mysqlclient==2.2.0
 pipreqs==0.4.13
 pycparser==2.21
-python-dotenv @ file:///home/conda/feedstock_root/build_artifacts/python-dotenv-split_1693865766170/work
+python-dotenv
 requests==2.31.0
 sqlparse==0.4.4
 typing_extensions==4.7.1
