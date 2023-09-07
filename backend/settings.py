@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
     'users',
     'database',
+    'adminPanel'
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
