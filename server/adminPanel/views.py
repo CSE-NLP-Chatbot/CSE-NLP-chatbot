@@ -8,9 +8,9 @@ from rest_framework import status
 from  database.models import Feedback
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
-
-
 # Create your views here.
+
+
 @api_view(('GET','DELETE'))
 def get_feedback(request, feedback_id):
     if request.method=='GET':
