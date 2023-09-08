@@ -1,10 +1,16 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Feedbacks from './components/Dashboard';
+import {BrowserRouter,Route,Routes} from 'react-router-dom';
 
 function App() {
   return (
-    <main className='container'>
-      <h1>Hello World</h1>
-    </main>
+    <BrowserRouter>
+    {/* <Navigation /> */}
+    <Routes>
+       <Route exact path="/" element={<Feedbacks/>} />
+     </Routes>
+  </BrowserRouter>
   );
 }
 
