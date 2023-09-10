@@ -2,8 +2,8 @@ import { useState } from "react";
 import { validateEmail } from "./utils";
 import {Link} from 'react-router-dom'
 import './styles/style.css'
-import logo from 'D:/my_projects/CSE-NLP-chatbot/frontend/user/src/images/CSEBOT.png';
-import background from 'D:/my_projects/CSE-NLP-chatbot/frontend/user/src/images/sliot.png';
+import logo from './images/CSEBOT.png';
+import background from './images/sliot.png';
 
 const PasswordErrorMessage = () => {
   return (

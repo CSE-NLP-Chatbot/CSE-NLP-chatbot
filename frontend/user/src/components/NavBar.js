@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./styles/navbar.css";
-import logo from 'D:/my_projects/CSE-NLP-chatbot/frontend/user/src/images/CSEBOT.png';
+import logo from './images/CSEBOT.png';
 
 function NavBar() {
 	const navRef = useRef();

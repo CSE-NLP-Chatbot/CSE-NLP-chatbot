@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { validateEmail } from './utils';
 import './styles/style.css';
-import logo from 'D:/my_projects/CSE-NLP-chatbot/frontend/user/src/images/CSEBOT.png';
-import background from 'D:/my_projects/CSE-NLP-chatbot/frontend/user/src/images/dep.png'; 
+import logo from './images/CSEBOT.png';
+import background from './images/dep.png'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
