@@ -2,10 +2,12 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import FeedbackSerializer
+from .serializers import KnowledgeBaseSerializer
 from django.http.response import JsonResponse
 from django.http.response import Http404
 from rest_framework import status 
 from  database.models import Feedback
+from  database.models import KnowledgeBase
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 # Create your views here.
@@ -30,7 +32,8 @@ def get_feedback(request, feedback_id):
         except Feedback.DoesNotExist:
             # Return a 404 response if the feedback does not exist
             return Response({"error": "Feedback Does Not Exist"},status=404)  
-        
+
+            
 @api_view(('GET',))
 def get_feedback_all(request):
     data = Feedback.objects.all()
@@ -78,4 +81,52 @@ def get_feedback_type_feedback_id(request,feedback_id,feedback_type):
         except Feedback.DoesNotExist:
             # Return a 404 response if the feedback does not exist
             return Response({"error": "Feedback Does Not Exist for the Specified Type id"},status=status.HTTP_404_NOT_FOUND)
- 
+
+@api_view(('POST',))
+def update_knowledgebase(request):
+     if request.method=='POST':
+        data = request.data
+        serializer = KnowledgeBaseSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse("Update Information Added Successfully",safe=False)
+        return JsonResponse("Failed to Add Update Information",safe=False)
+
+           
+@api_view(('GET',))
+def get_knowledgebase_info_all(request):
+    data = KnowledgeBase.objects.all()
+    serializer = KnowledgeBaseSerializer(data, many=True)
+    return Response(serializer.data)   
+
+
+@api_view(('GET','DELETE'))
+def get_knowledgebase_info(request, update_id):
+    if request.method=='GET':
+        try:
+            update_info = KnowledgeBase.objects.get(update_id=update_id)
+            serializer = KnowledgeBaseSerializer(update_info)
+            return Response(serializer.data)
+        except KnowledgeBase.DoesNotExist:
+            # Return a 404 response if the feedback does not exist
+            return Response({"error": "Information Does Not Exist"},status=404)
+        
+    elif request.method=='DELETE':
+        try:
+            update_info = KnowledgeBase.objects.get(update_id=update_id)
+            update_info.delete()
+            return Response({"message": "information deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except Feedback.DoesNotExist:
+            # Return a 404 response if the feedback does not exist
+            return Response({"error": "Information Does Not Exist"},status=404)
+
+@api_view(('POST',))
+def save_file(request):
+    data = request.FILES.get('file')
+    print (f"Filename: {data}")
+    print ("Content ------------------------------")
+    with open(f"D:\Code Playground\SEP\chatbot\server\KnowledgeBaseFiles\{data}"  , 'w') as fi:
+        for chunk in data.chunks():
+            fi.write(chunk.decode('utf-8'))  # Assuming the file is text-based
+    return Response({"message": "Successfully recieved"}, status=200)
+            

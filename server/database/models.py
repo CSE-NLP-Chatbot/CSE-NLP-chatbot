@@ -49,7 +49,7 @@ class Feedback(models.Model):
         return self.feedback_details
 
 
-class UpdateTable(models.Model):
+class KnowledgeBase(models.Model):
     PENDING = "Pending"
     COMPLETED = "Completed"
     UPDATE_STATUS_CHOICES = [
