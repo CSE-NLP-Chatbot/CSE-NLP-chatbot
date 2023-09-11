@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Row, Col } from "react-bootstrap";
 import Badge from "react-bootstrap/Badge";
-import Stack from "react-bootstrap/Stack";
+
 
 const ViewFeedbackModal = (props) => {
   return (
@@ -32,7 +32,6 @@ const ViewFeedbackModal = (props) => {
               <Card>
                 <Card.Body>{props.feedback.feedback_details}</Card.Body>
               </Card>
-             
             </Col>
           </Row>
         </Modal.Body>
