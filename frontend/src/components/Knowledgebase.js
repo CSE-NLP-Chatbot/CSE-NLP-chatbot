@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "quill/dist/quill.snow.css";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
@@ -10,6 +10,7 @@ import {
 } from "../services/UpdateKnowledgebaseServices";
 
 const Knowledgebase = () => {
+  const fileInputRef = useRef(null);
   const [info, setInfo] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
   const [content, setContent] = useState("");
@@ -45,36 +46,57 @@ const Knowledgebase = () => {
     }
   };
 
+  const handleCancel = () => {
+    setContent(""); // Clear the content
+    // Clear the file name
+    setFileName("");
+
+    setIsEditing(false); // Exit editing mode
+
+    // Reset the file input value
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    // You can implement the saving logic here.
-    // For simplicity, we will just log the content to the console.
-    const blob = new Blob([content], { type: "text/plain" });
-    const formData = new FormData();
-    formData.append("file", blob, fileName);
+    if (window.confirm("Are you sure you want to save the changes?")) {
+      const blob = new Blob([content], { type: "text/plain" });
+      const formData = new FormData();
+      formData.append("file", blob, fileName);
 
-    // Replace 'your-server-endpoint' with the actual backend API endpoint
-    fetch("http://127.0.0.1:8000/savefile/", {
-      method: "POST", // You can use 'PUT' or 'PATCH' depending on your API
-      body: formData,
-    })
-      .then((response) => {
-        if (response.ok) {
-          setIsSaved(true);
-          alert("File saved successfully");
-        } else {
-          // Handle errors, display an error message, etc.
-          console.error("Failed to save data to the server");
-        }
+      // Replace 'your-server-endpoint' with the actual backend API endpoint
+      fetch("http://127.0.0.1:8000/savefile/", {
+        method: "POST", // You can use 'PUT' or 'PATCH' depending on your API
+        body: formData,
       })
-      .catch((error) => {
-        console.error("Error while saving data:", error);
-      });
-    console.log(content);
-    setIsEditing(false);
+        .then((response) => {
+          if (response.ok) {
+            setIsSaved(true);
+            alert("File saved successfully");
+          } else {
+            // Handle errors, display an error message, etc.
+            console.error("Failed to save data to the server");
+          }
+        })
+        .catch((error) => {
+          console.error("Error while saving data:", error);
+        });
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      // Clear the content
+      setContent("");
+
+      // Clear the file name
+      setFileName("");
+      setIsEditing(false);
+    }
   };
 
   const handleDelete = (e, update_id) => {
@@ -107,7 +129,6 @@ const Knowledgebase = () => {
                       }}
                     >
                       <Card.Body className="card-body">
-                        {/* <Card.Title></Card.Title> */}
                         <Card.Text>{information.update_information}</Card.Text>
                         <div class="d-flex justify-content-between align-items-center">
                           <Button
@@ -138,6 +159,7 @@ const Knowledgebase = () => {
                   type="file"
                   accept=".txt"
                   onChange={handleFileChange}
+                  ref={fileInputRef}
                 />
               </Form.Group>
               {fileName && <p className="label">Loaded file: {fileName}</p>}
@@ -179,6 +201,16 @@ const Knowledgebase = () => {
                   onClick={handleSave}
                 >
                   Save
+                </Button>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <Button
+                  className="editB"
+                  variant="danger"
+                  onClick={() => {
+                    handleCancel();
+                  }}
+                >
+                  Cancel
                 </Button>
               </Col>
             </Row>

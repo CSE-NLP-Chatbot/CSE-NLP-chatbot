@@ -101,6 +101,7 @@ const Feedbacks = () => {
                   <Button
                     className="mr-2"
                     variant="danger"
+                    style={{ marginLeft: "5px" }}
                     onClick={(event) => handleAll(event, "All")}
                   >
                     All
