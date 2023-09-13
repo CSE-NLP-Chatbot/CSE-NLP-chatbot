@@ -99,7 +99,7 @@ const Knowledgebase = () => {
                       border="primary"
                       style={{
                         width: "18rem",
-                        height: "300px",
+                        height: "250px",
                         marginTop: "20px",
                         marginBottom: "10px",
                         marginLeft: "30px",
