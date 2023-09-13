@@ -1,33 +1,0 @@
-Is it possible to share the timetable for the whole year?
-Time table of a particular semester depends on the modules lecturers are willing to offer. We will consider the possibility of releasing a tentative one. Anyway, if you miss any subject in sem 1 and 2, you can take them in sem 4/5 and  with the junior batch.
-
-What's the minimum number of credits for a semester?
-There is no minimum. But please try to do at least the compulsaries.
-
-3.Do we have an add/drop period for this semester?
-You can add/drop during the first two weeks. If any change is needed afterwards, contact the relevant lecturer and the MSc coordinator.
-
-4. What is the difference between an Elective module and an Optional module?
-Electives belong to different buckets. You need to take the specified number of modules from that bucket to fulfill the credit requirement. Optionals are not fixed to a bucket. You can take them as needed.
-
-5. Is it possible to switch the specialization?
-It is highly recommended that the students select the specialization at the beginning and stick to it. Although we have no objections to changing later, it may be difficult for the student to catch up with the missed subjects if they change too late. 
-
-6. Is it possible to attend other lectures which we are not enrolled in? and How?
-Kindly contact respective lecturers if you need to do that.
-
-7.Will the credit for Optional modules also be calculated in GPA?
-Yes
-
-8. There are quite a few optional and elective subjects in the semester time table. But with time we can do only some. Will the rest of the subjects be available in upcoming semesters? or how to get that information.
-Yes, the subjects are offered annually. You can always take a module with the junior batch.
-
-9. Is it possible to take more than 36 credits for modules? If so, will the additional credits be considered for GPA calculation?
-You can take additional credits, but this is not very common as this would add an extra load.
-
-10. Is there any possibility to extend the course period ?
-Maximum duration is 4 years. Normal duration is 2 years. You can go beyond 4 years only with a valid reason s.a. Health-related issue, which should be approved by the Faculty PostGraduate board.
-
-11.Is it possible to take CS6995 Industrial Project (5 credits) and CS6996 MSc Independent Research (15 credits) instead of the normal dissertation (CS6999)?
-Yes. But this has not been a popular option in the recent past. Please talk to MSc coordinators, if you wish to take this path.
-
