@@ -1,0 +1,81 @@
+.body_div{
+  background: #252830;
+  height: 100%;
+  overflow: auto;
+}
+
+
+.side-container {
+    padding-top: 30px;
+  }
+  
+  
+  .side-row {
+    padding: 30px;
+  }
+  
+  .react-bootstrap-table thead { 
+    position: sticky; 
+    top: 0;
+    background-color: #333; 
+    z-index: 1021; 
+    color: white; 
+  }
+  
+  .container {
+    margin: 20px; /* Adjust the margin as needed */
+  }
+
+  /* For small screens (e.g., smartphones) */
+@media (max-width: 576px) {
+  .react-bootstrap-table th,
+  .react-bootstrap-table td {
+    font-size: 14px; /* Adjust the font size as needed */
+  }
+}
+
+/* For medium screens (e.g., tablets) */
+@media (max-width: 768px) {
+  .react-bootstrap-table th,
+  .react-bootstrap-table td {
+    font-size: 16px; /* Adjust the font size as needed */
+  }
+}
+
+/* For large screens (e.g., desktops) */
+@media (min-width: 992px) {
+  .react-bootstrap-table th,
+  .react-bootstrap-table td {
+    font-size: 18px; /* Adjust the font size as needed */
+  }
+}
+
+/* For small screens (e.g., smartphones) */
+@media (max-width: 576px) {
+  .btn-toolbar {
+    flex-direction: column; /* Stack buttons vertically */
+  }
+
+  .btn {
+    width: 100%; /* Make buttons full width */
+    margin-bottom: 10px; /* Add spacing between buttons */
+  }
+}
+
+/* For medium screens (e.g., tablets) and larger screens */
+@media (min-width: 768px) {
+  .btn-toolbar {
+    flex-direction: row; /* Reset button layout to horizontal */
+  }
+
+  .btn {
+    width: auto; /* Reset button width to auto (default) */
+    margin-bottom: 0; /* Remove spacing between buttons */
+  }
+}
+
+
+
+
+
+

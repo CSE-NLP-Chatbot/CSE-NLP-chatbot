@@ -1,5 +1,4 @@
 import "./App.css";
-import "./knowledgebase.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Feedbacks from "./components/Dashboard";
 import Navigation from "./components/Navigation";

@@ -7,12 +7,12 @@ import { Button, ButtonToolbar } from "react-bootstrap";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import ViewFeedbackModal from "./ViewFeedbackModal";
 import UpdateFeedbackModal from "./UpdateFeedbackModal";
+import "../dashboard.css";
 import {
   getfeedbacks,
   get_feedbacks_by_feedback_type,
   deleteFeedback,
 } from "../services/FeedbackServices";
-import "../App.css";
 
 const Feedbacks = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -55,7 +55,6 @@ const Feedbacks = () => {
     if (window.confirm("Are you sure ?")) {
       e.preventDefault();
       deleteFeedback(feedback_id).then((result) => {
-        alert(result);
         setIsUpdated(true);
         alert("Feedback deleted successfully");
         if (feedbackType === "All") {
@@ -88,10 +87,12 @@ const Feedbacks = () => {
   let ViewFeedbackModalClose = () => setViewModalShow(false);
   let UpdateFeedbackModalClose = () => setUpdateModalShow(false);
   return (
-    <div className="container-fluid side-container">
+    <div className="body_div container-fluid side-container ">
       <div className="row side-row">
         {feedbacks.length === 0 ? (
-          <h2 className="text-center">No feedbacks</h2>
+          <h2 className="text-center" style={{ color: "white" }}>
+            No feedbacks
+          </h2>
         ) : (
           <div>
             <Row>
@@ -142,7 +143,9 @@ const Feedbacks = () => {
               </thead>
               <tbody>
                 {feedbacks.map((feedback) => (
-                  <tr key={feedback.feedback_id}>
+                  <tr
+                    key={feedback.feedback_id}
+                  >
                     <td>{feedback.feedback_details}</td>
                     <td>{feedback.feedback_type}</td>
                     <td>

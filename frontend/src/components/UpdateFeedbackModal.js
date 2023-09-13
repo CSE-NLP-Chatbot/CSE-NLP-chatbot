@@ -12,9 +12,7 @@ const UpdateFeedbackModal = (props) => {
     e.preventDefault();
     updateKnowledgebase(e.target).then(
       (result) => {
-        alert(result);
         deleteFeedback(props.feedback.feedback_id).then((result) => {
-          alert(result);
           props.setupdated(true);
           alert("Feedback deleted successfully");
         });

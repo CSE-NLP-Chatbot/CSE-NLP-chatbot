@@ -1,20 +1,26 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import {Link, NavLink } from "react-router-dom";
+import {Link, NavLink,useLocation} from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
+import "../navigation.css"
 
 const Navigation = () => {
+  const location = useLocation(); // Get the current location
+
   return (
     <div>
-      <Navbar className="navbar"  data-bs-theme="dark">
+      <Navbar expand="lg" className="navbar"  data-bs-theme="dark">
         <Container>
           <Link className="navbar-brand" to='/'>Admin Dashboard</Link>
-          <Nav className="me-auto">
-            <NavLink  className="nav-item nav-link" to="/adminDashboard/knowledgebase">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ml-auto" >
+            <NavLink className="nav-item nav-link" to="/adminDashboard" activeClassName="active">Dashboard</NavLink> 
+            <NavLink  className="nav-item nav-link" to="/adminDashboard/knowledgebase" activeClassName="active">
               knwoledgebase
             </NavLink>
-            <NavLink className="nav-item nav-link" to="/adminDashboard">Dashboard</NavLink> 
           </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>

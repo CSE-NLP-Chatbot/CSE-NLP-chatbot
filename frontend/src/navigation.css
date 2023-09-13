@@ -1,0 +1,32 @@
+@media (max-width: 575.98px) {
+    .navbar-brand {
+      font-size: 20px; /* Adjust the brand font size */
+      margin-right: 0; /* Remove margin on the right of the brand */
+    }
+  }
+  
+  /* For medium screens (e.g., tablets) */
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    .navbar-brand {
+      font-size: 24px; /* Adjust the brand font size */
+    }
+  }
+  
+  /* For large screens (e.g., desktops) */
+  @media (min-width: 992px) {
+    .navbar {
+      padding-top: 15px; /* Adjust top padding for the navbar */
+    }
+  
+    .navbar-brand {
+      font-size: 28px; /* Adjust the brand font size */
+    }
+  }
+ 
+
+  
+  
+  
+  
+  
+  

@@ -1,68 +1,12 @@
 
 
-body,html {
-  height :100%;
-  width:100%;
-  margin:0;
-  /* background: #252830;
-  background-color: #252830; */
-}
-   
-
-.side-container {
-  padding-top: 30px;
-}
 
 
-.side-row {
-  padding: 30px;
-}
-
-.react-bootstrap-table thead { 
-  position: sticky; 
-  top: 0;
-  background-color: #333; 
-  z-index: 1021; 
-  color: white; 
-}
-
-.container {
-  margin: 20px; /* Adjust the margin as needed */
-}
 
 .navbar {
-  /* Add margin to the navigation bar */
+ 
   background: #252830;
 }
 
 
 
-.cards{
-  margin-top: 20px; 
-  border :none;
-  background:#2a2f40;
-  padding-left: 30px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.5); 
-		
-}
-
-.label{
-  color: white;
-  padding-top: 10px;
-}
-
-.card-body{
-  color:#fff;
-  
-}
-
-.editB{
-  margin-top: 10px;
-}
-
-.file{
-  margin-left: 10px;
-  
-}

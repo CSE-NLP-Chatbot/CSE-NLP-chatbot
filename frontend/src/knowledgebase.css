@@ -1,10 +1,65 @@
-body{
-    
-  background-color: #252830; 
-}
 
 .body_div{
     background: #252830;
-    height: 200vh;
+    min-height: 100vh;
+    overflow: auto;  
   }
-  
+
+.cards {
+  margin-top: 20px;
+  border: none;
+  background: #2a2f40;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.label {
+  color: white;
+  padding-top: 10px;
+}
+
+.card-body {
+  color: #fff;
+}
+
+.editB {
+  margin-top: 10px;
+}
+
+.file {
+  margin-left: 10px;
+}
+
+.form_create {
+  color: #ffffff; /* Text color */
+  padding: 20px; /* Adjust padding as needed */
+}
+
+
+/* For small screens (e.g., smartphones) */
+@media (max-width: 575.98px) {
+  .form_create {
+    padding: 10px; /* Add padding to the form container */
+  }
+  .label {
+    font-size: 16px; /* Adjust label font size */
+  }
+  .editB {
+    font-size: 16px; /* Adjust button font size */
+    width: 100%; /* Make the button full width */
+  }
+  /* You can further customize styles as needed */
+}
+
+/* For medium screens (e.g., tablets) and larger screens */
+@media (min-width: 576px) {
+  /* Add your specific styles for medium and larger screens here */
+}
+
+
+
+
+
+

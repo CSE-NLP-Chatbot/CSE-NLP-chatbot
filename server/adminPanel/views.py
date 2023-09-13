@@ -123,8 +123,6 @@ def get_knowledgebase_info(request, update_id):
 @api_view(('POST',))
 def save_file(request):
     data = request.FILES.get('file')
-    print (f"Filename: {data}")
-    print ("Content ------------------------------")
     with open(f"D:\Code Playground\SEP\chatbot\server\KnowledgeBaseFiles\{data}"  , 'w') as fi:
         for chunk in data.chunks():
             fi.write(chunk.decode('utf-8'))  # Assuming the file is text-based

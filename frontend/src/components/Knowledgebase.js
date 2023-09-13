@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
-import { Button, ButtonToolbar } from "react-bootstrap";
+import "../knowledgebase.css";
+import { Button } from "react-bootstrap";
 import {
   getKnowledgebaseInfo,
   deleteKnowledgebaseInfo,
@@ -63,8 +63,8 @@ const Knowledgebase = () => {
     })
       .then((response) => {
         if (response.ok) {
-          setIsSaved(true); // Mark the changes as saved
-          // You can display a success message to the user here
+          setIsSaved(true);
+          alert("File saved successfully");
         } else {
           // Handle errors, display an error message, etc.
           console.error("Failed to save data to the server");
@@ -85,100 +85,106 @@ const Knowledgebase = () => {
     });
   };
 
-  console.log(info);
   return (
     <div className="body_div">
-      <Row className="flex-wrap">
-        {info.length!==0&&<Col sm={4}>
-          <div className="cards">
-            {info.map((information) => (
-              <Card
-                className="container-fluid  bg-dark text-white  mb-3"
-                key={information.update_id}
-                border="primary"
-                style={{
-                  width: "18rem",
-                  marginBottom: "20px",
-                  marginLeft: "20px",
-                }}
-              >
-                {/* <Card.Header>{information.update_status}</Card.Header> */}
-                <Card.Body className="card-body">
-                  {/* <Card.Title></Card.Title> */}
-                  <Card.Text>{information.update_information}</Card.Text>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <Button
-                      variant="warning"
-                      onClick={(event) =>
-                        handleDelete(event, information.update_id)
-                      }
+      <Col>
+        {info.length !== 0 && (
+          <Row>
+            <div className="cards">
+              <Row xs={1} sm={2} md={3} lg={4}>
+                {info.map((information) => (
+                  <Col key={information.update_id} xs={12} sm={6} md={4} lg={3}>
+                    <Card
+                      className="container-fluid bg-dark text-white mb-3"
+                      border="primary"
+                      style={{
+                        width: "18rem",
+                        height: "300px",
+                        marginTop: "20px",
+                        marginBottom: "10px",
+                        marginLeft: "30px",
+                        marginRight: "10px",
+                      }}
                     >
-                      Solve
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-        </Col>}
-        <Col sm={8}>
-          <Container className=" container-fluid form_create">
+                      <Card.Body className="card-body">
+                        {/* <Card.Title></Card.Title> */}
+                        <Card.Text>{information.update_information}</Card.Text>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <Button
+                            variant="warning"
+                            onClick={(event) =>
+                              handleDelete(event, information.update_id)
+                            }
+                          >
+                            Solve
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </Row>
+        )}
+      </Col>
+      <Col style={{ backgroundColor: "#252830" }}>
+        <Container className=" container-fluid form_create">
+          <Row className="mt-4">
+            <Col>
+              <Form.Group>
+                <Form.Label className="label">Load File</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept=".txt"
+                  onChange={handleFileChange}
+                />
+              </Form.Group>
+              {fileName && <p className="label">Loaded file: {fileName}</p>}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                className="editB"
+                variant="primary"
+                onClick={handleEdit}
+                disabled={!fileName}
+              >
+                Edit
+              </Button>
+            </Col>
+          </Row>
+          {isEditing && (
             <Row className="mt-4">
               <Col>
                 <Form.Group>
-                  <Form.Label className="label">Load File</Form.Label>
+                  <Form.Label className="label">Edit File</Form.Label>
                   <Form.Control
-                    type="file"
-                    accept=".txt"
-                    onChange={handleFileChange}
+                    as="textarea"
+                    rows={10}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                   />
                 </Form.Group>
-                {fileName && <p className="label">Loaded file: {fileName}</p>}
               </Col>
             </Row>
+          )}
+          {isEditing && (
             <Row>
               <Col>
                 <Button
                   className="editB"
-                  variant="primary"
-                  onClick={handleEdit}
-                  disabled={!fileName}
+                  variant="success"
+                  onClick={handleSave}
                 >
-                  Edit
+                  Save
                 </Button>
               </Col>
             </Row>
-            {isEditing && (
-              <Row className="mt-4">
-                <Col>
-                  <Form.Group >
-                    <Form.Label className="label">Edit File</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={10}
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-            )}
-            {isEditing && (
-              <Row>
-                <Col>
-                  <Button
-                    className="editB"
-                    variant="success"
-                    onClick={handleSave}
-                  >
-                    Save
-                  </Button>
-                </Col>
-              </Row>
-            )}
-          </Container>
-        </Col>
-      </Row>
+          )}
+        </Container>
+      </Col>
     </div>
   );
 };
