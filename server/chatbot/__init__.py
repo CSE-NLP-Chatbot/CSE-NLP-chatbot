@@ -1,5 +1,5 @@
 import os
-
+from dotenv import load_dotenv
 from langchain.document_loaders import UnstructuredURLLoader
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -11,7 +11,9 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chains.question_answering import load_qa_chain
 from langchain import OpenAI
 
-os.environ["OPENAI_API_KEY"] = "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"
+load_dotenv()
+
+os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
 
 loader = TextLoader(r"D:\Code Playground\SEP\chatbot\server\chatbot\UG.txt")
 data = loader.load()
