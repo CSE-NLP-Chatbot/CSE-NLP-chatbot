@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'authentication',
     'users',
     'database',
-    'adminPanel'
+    'adminPanel',
+    'chatbot'
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

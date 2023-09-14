@@ -217,6 +217,7 @@ celerybeat-schedule
 
 # Data files
 *.txt
+*.pkl
 
 # virtualenv
 venv/
