@@ -6,7 +6,7 @@ backports.zoneinfo==0.2.1
 certifi==2023.7.22
 cffi==1.15.1
 charset-normalizer==3.2.0
-Django==4.2.5
+Django
 django-cors-headers==3.13.0
 djangorestframework==3.14.0
 docopt==0.6.2
