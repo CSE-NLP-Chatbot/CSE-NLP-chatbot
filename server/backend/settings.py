@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'users',
     'database',
     'adminPanel',
-    'chatbot'
+    'chatbot',
+    'chat'
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -113,7 +114,6 @@ DATABASES = {
         # 'PASSWORD' :os.getenv('PASSWORD'),     # or the port on which your MySQL server is listening
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
