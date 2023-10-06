@@ -64,16 +64,17 @@ const Login = () => {
     <div className='login template d-flex justify-content-center align-items-center vh-100 bg-primary' style={{ backgroundImage: `url(${background})` }}>
       <div className='form_container p-5 rounded' style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
         <h2 className='fw-light text-info mb-5'>
-          <img
-            style={{
-              display: 'flex',
-              width: '100px',
-              height: '100px',
-              margin: '0 auto',
-            }}
-            src={logo}
-            alt='Logo'
-          />
+        <img
+              style={{
+                display: 'flex',
+                borderRadius: '25%',
+                width: '120px',
+                height: '120px',
+                margin: '0 auto',
+
+              }}
+              src={logo}
+            />
         </h2>
         <form onSubmit={handleLogin}>
           <h3 className='text-center'>Log In</h3>

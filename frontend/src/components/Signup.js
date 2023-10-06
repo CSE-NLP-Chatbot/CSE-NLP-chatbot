@@ -88,9 +88,11 @@ function Signup() {
             <img
               style={{
                 display: 'flex',
-                width: '100px',
-                height: '100px',
+                borderRadius: '25%',
+                width: '120px',
+                height: '120px',
                 margin: '0 auto',
+
               }}
               src={logo}
             />

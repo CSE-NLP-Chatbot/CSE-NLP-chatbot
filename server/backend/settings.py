@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'authentication',
+    'rest_framework.authtoken',
     'users',
     'database',
     'adminPanel',
