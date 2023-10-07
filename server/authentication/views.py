@@ -5,18 +5,20 @@ from rest_framework.response import Response
 from django.http.response import JsonResponse
 from django.contrib.auth.hashers import check_password
 from django.http.response import Http404
-from django.core.mail import EmailMessage, send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMessage,EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
-from rest_framework.decorators import api_view, renderer_classes
-from django.contrib.auth import authenticate, login, logout
+from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import login, logout, authenticate
 from users.models import CustomUser
 from backend import settings
 from . tokens import generate_token
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 
 
@@ -45,7 +47,7 @@ def signup(request):
         myuser.username = username
         myuser.is_active = False
         myuser.save()
-
+        print('Insignup',request.user.is_authenticated)
         # Email Address Confirmation Email
         current_site = get_current_site(request)
         email_subject = "Confirm your CSE ChatBot account!!"
@@ -90,8 +92,9 @@ def activate(request,uidb64,token):
     if myuser is not None and generate_token.check_token(myuser,token):
         myuser.is_active = True
         myuser.save()
+        print('Inactivate1',request.user.is_authenticated)
         login(request,myuser)
-
+        print('Inactivate2',request.user.is_authenticated)
         return render(request,'activated_successfully.html')
      
     else:
@@ -103,13 +106,13 @@ def signin(request):
     if request.method == "POST":
         email = request.data.get("email")
         password1 = request.data.get("password")
-
-        user = custom_authenticate(email=email, password=password1)
+        user = authenticate(request, email=email, password=password1)
         if user == 'NA':
             return JsonResponse({"error": "User account is not activated."},safe=False)
         if user is not None:
+            print(request.user.is_authenticated, 'signin1')
             login(request, user)
-        
+            print(request.user.is_authenticated,'signin2')
             if user.login_times == 0:
                 user.login_times +=1
                 user.save()
@@ -132,6 +135,7 @@ def signout(request):
     
     
 @api_view(("PUT",))
+@login_required
 def editprofile(request):
     if request.method == "PUT":
         firstname = request.data.get("firstname")
@@ -158,6 +162,7 @@ def editprofile(request):
 
 
 @api_view(("PUT",))
+@login_required
 def changepassword(request):
     if request.method == "PUT":
         currentPassword = request.data.get("currentPassword")
@@ -182,7 +187,10 @@ def changepassword(request):
         else:
            return JsonResponse("Bad Credintials",safe=False)
                        
-            
+@api_view()
+@permission_classes([IsAuthenticated])
+def secret(request): 
+    return Response({"message":"Some secret message"})           
         
 
         

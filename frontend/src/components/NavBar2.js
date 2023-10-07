@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import logo from './images/CSEBOT.png';
 import avatar from './images/default-avatar.png';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate  } from 'react-router-dom';
+import axios from 'axios';
 
 const NavBar2 = () => {
 
   const [Username, setUsername] = useState('');
   const [Avatar, setAvatar] = useState(avatar)
+  const navigate = useNavigate();
 
   // Load user details from local storage when the component mounts
   useEffect(() => {
@@ -26,7 +29,16 @@ const NavBar2 = () => {
     }
   }, []);
 
+  // Logout function
+  const handleLogout = () => {
+    // Clear local storage or perform any other client-side cleanup as needed
+    // localStorage.removeItem('username');
+    // localStorage.removeItem('userdetails');
 
+    // Redirect to the logout URL on the server-side
+    const response = axios.get('http://127.0.0.1:8000/signout/');
+    navigate('../login');
+  };
   return (
     <header className="navbar page-header darkHeader border0 navbar-expand-lg" style={{height: "80px"}}>
       <div className="container">
@@ -59,7 +71,7 @@ const NavBar2 = () => {
             <NavDropdown.Item href="bot">BOT</NavDropdown.Item>
             <NavDropdown.Item href="changepassword">Change Password</NavDropdown.Item>
             <NavDropdown.Item href="editprofile">Edit Profile</NavDropdown.Item>
-            <NavDropdown.Item href="logout">Log Out</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
           </NavDropdown>
         </div>
       </div>
