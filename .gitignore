@@ -2,4 +2,6 @@
 .vscode
 
 # Environments
-myenv/
+myenv
+
+node_modules
