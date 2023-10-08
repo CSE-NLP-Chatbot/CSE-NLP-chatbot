@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import sys
 import os
 from dotenv import load_dotenv
 
@@ -35,8 +36,12 @@ SECRET_KEY = "django-insecure-#w9x!zoq*)l4h_8-g7c36q6v6j*=jc=v)&l%^0zub$f_m%$qu$
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, 'static')
+#     ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,7 +59,9 @@ INSTALLED_APPS = [
     'users',
     'database',
     'adminPanel',
-    'chatbot'
+    'chatbot',
+    'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -91,19 +98,33 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE":  'django.db.backends.mysql',
-        "NAME": 'chatbotDb',
-        'HOST': os.getenv('HOST'),  # or the hostname where your MySQL server is running
-        'PORT': '3306', 
-        'USER':os.getenv('USER'),
-        'PASSWORD' :os.getenv('PASSWORD'),     # or the port on which your MySQL server is listening
+if 'test' in sys.argv:
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'chatbotetest'
+        }
     }
-}
+else:
+    # Database
+    # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+    DATABASES = {
+        "default": {
+            "ENGINE": 'django.db.backends.postgresql_psycopg2',
+            "NAME": os.getenv('DB_NAME'),
+            'HOST': os.getenv('HOST'), # or the hostname where your MySQL server is running
+            'PORT': '5432',
+            'USER':os.getenv('APP_USER'),
+            'PASSWORD' :os.getenv('PASSWORD'), 
+            # "ENGINE": 'django.db.backends.mysql',
+            # "NAME": os.getenv('DB_NAME'),
+            # 'HOST': 'localhost', # or the hostname where your MySQL server is running
+            # 'PORT': '3306',
+            # 'USER':os.getenv('USER'),
+            # 'PASSWORD' :os.getenv('PASSWORD'),     # or the port on which your MySQL server is listening
+        }
+    }
 
 
 # Password validation
