@@ -179,7 +179,7 @@ const Login = () => {
             </svg>
             </div>
             <div className='modal-title'><b>Error!</b></div>
-            <div className='modal-body d-flex flex-column align-items-center'>Bad Credentials. First, Sign up.</div>
+            <div className='modal-body d-flex flex-column align-items-center'>Bad Credentials</div>
             <div className='modal-footer d-flex justify-content-center'>
               <button
                 type='button'

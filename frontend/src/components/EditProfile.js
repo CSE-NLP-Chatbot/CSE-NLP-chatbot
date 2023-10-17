@@ -11,6 +11,16 @@ function EditProfile() {
     role: "",
     aboutu: "",
     avatar:"" ,
+    email:""
+  });
+
+  const [usercard, setusercard] = useState({
+    firstname: "",
+    lastname: "",
+    role: "",
+    aboutu: "",
+    avatar:"" ,
+    email:""
   });
 
 
@@ -37,6 +47,7 @@ function EditProfile() {
 
     if (savedUserDetails) {
       setuserdetails(savedUserDetails);
+      setusercard(savedUserDetails);
     }
   }, []);
 
@@ -60,19 +71,28 @@ function EditProfile() {
 
       if (savedUserEmail) {
         setEmail(savedUserEmail);
+        setuserdetails({ ...userdetails, email: savedUserEmail });
+        console.log(userdetails.email);
       }
+
     }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-       // Save user details to local storage
-      localStorage.setItem('userdetails', JSON.stringify(userdetails));
-      const response = await axios.put('http://127.0.0.1:8000/editprofile/', { ...userdetails, email: Email });
+      const response = await axios.put('http://127.0.0.1:8000/editprofile/', userdetails);
       const data = response.data;
       console.log(data+"hjk");
       if (data === "Information saved Sucessfully!!") {
         setShowDetailsSavedAlert(true);
+        setusercard({ ...usercard, firstname: userdetails.firstname,
+        lastname: userdetails.lastname,
+        role: userdetails.role,
+        aboutu: userdetails.aboutu,
+        avatar:userdetails.avatar,
+        email: Email});
+         // Save user details to local storage
+        localStorage.setItem('userdetails', JSON.stringify(userdetails));
       }else if (data.name === "AxiosError") {
         setshowUnauthorizedAccessAlert(true);
       }
@@ -103,11 +123,11 @@ function EditProfile() {
                   <div className="card-container">
                     <div className="content" >
                       <div className="card">
-                        <div className="firstinfo"><img src={userdetails.avatar} />
+                        <div className="firstinfo"><img src={usercard.avatar} />
                           <div className="profileinfo">
-                            <h1>{userdetails.firstname+" "+userdetails.lastname}</h1>
-                            <h3>{userdetails.role}</h3>
-                            <p className="bio">{userdetails.aboutu}</p>
+                            <h1>{usercard.firstname+" "+usercard.lastname}</h1>
+                            <h3>{usercard.role}</h3>
+                            <p className="bio">{usercard.aboutu}</p>
                           </div>
                         </div>
                       </div>
@@ -120,7 +140,7 @@ function EditProfile() {
                         >
                           <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                         </svg>
-                        <small style={{paddingLeft: '12px'}}>{Email}</small>
+                        <small style={{paddingLeft: '12px'}}>{usercard.email}</small>
                       </div>
                     </div>
                   </div>

@@ -106,7 +106,7 @@ def signin(request):
     if request.method == "POST":
         email = request.data.get("email")
         password1 = request.data.get("password")
-        user = authenticate(request, email=email, password=password1)
+        user = custom_authenticate(email=email, password=password1)
         if user == 'NA':
             return JsonResponse({"error": "User account is not activated."},safe=False)
         if user is not None:
@@ -135,7 +135,6 @@ def signout(request):
     
     
 @api_view(("PUT",))
-@login_required
 def editprofile(request):
     if request.method == "PUT":
         firstname = request.data.get("firstname")
@@ -146,7 +145,7 @@ def editprofile(request):
         avatar = request.data.get("avatar")
         
         user = CustomUser.objects.get(email=email)
-
+        print(email)
         
         user.first_name=firstname 
         user.last_name=lastname
@@ -162,14 +161,12 @@ def editprofile(request):
 
 
 @api_view(("PUT",))
-@login_required
 def changepassword(request):
     if request.method == "PUT":
         currentPassword = request.data.get("currentPassword")
         newPassword = request.data.get("newPassword")
         confirmNewPassword = request.data.get("confirmNewPassword")
         email = request.data.get("email")
-        
 
         if newPassword != confirmNewPassword:
             return JsonResponse("Passwords didn't matched", safe=False)
@@ -180,17 +177,13 @@ def changepassword(request):
         user = custom_authenticate(email=email, password=currentPassword)
 
         if user is not None:
-            user.password= newPassword
+            user.set_password(newPassword)
             user.save()
             return JsonResponse("password changed successfully", safe=False)
 
         else:
            return JsonResponse("Bad Credintials",safe=False)
-                       
-@api_view()
-@permission_classes([IsAuthenticated])
-def secret(request): 
-    return Response({"message":"Some secret message"})           
+                             
         
 
         
