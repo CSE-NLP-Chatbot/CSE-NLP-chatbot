@@ -27,11 +27,13 @@ from rest_framework.authentication import TokenAuthentication
 
 @api_view(("POST",))
 def signup(request):
+    print("iop")
     if request.method == "POST":
         username = request.data.get("username")
         email = request.data.get("email")
         password1 = request.data.get("pword")
         password2 = request.data.get("confirmPword")
+        device = request.data.get("device")
        
 
         if CustomUser.objects.filter(email=email).exists():
@@ -46,26 +48,30 @@ def signup(request):
         myuser = CustomUser.objects.create_user(email, password1)
         myuser.username = username
         myuser.is_active = False
-        myuser.save()
-        print('Insignup',request.user.is_authenticated)
-        # Email Address Confirmation Email
-        current_site = get_current_site(request)
-        email_subject = "Confirm your CSE ChatBot account!!"
-        message2 = render_to_string('email_template.html',{
-            'name': myuser.username,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(myuser.user_ID)),
-            'token': generate_token.make_token(myuser)
-        })
-        email = EmailMultiAlternatives(
-        email_subject,
-        strip_tags(message2),
-        settings.EMAIL_HOST_USER,
-        [myuser.email],
-        )
-        email.attach_alternative(message2,'text/html')
-        email.fail_silently = True
-        email.send()
+        if device == "mobile":
+            myuser.is_active = True
+            myuser.save()
+        else:
+            myuser.save()
+            print('Insignup',request.user.is_authenticated)
+            # Email Address Confirmation Email
+            current_site = get_current_site(request)
+            email_subject = "Confirm your CSE ChatBot account!!"
+            message2 = render_to_string('email_template.html',{
+                'name': myuser.username,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(myuser.user_ID)),
+                'token': generate_token.make_token(myuser)
+            })
+            email = EmailMultiAlternatives(
+            email_subject,
+            strip_tags(message2),
+            settings.EMAIL_HOST_USER,
+            [myuser.email],
+            )
+            email.attach_alternative(message2,'text/html')
+            email.fail_silently = True
+            email.send()
         return JsonResponse(
             "Your Account has been created succesfully",
             safe=False,
@@ -103,25 +109,30 @@ def activate(request,uidb64,token):
 
 @api_view(("POST",))
 def signin(request):
+    print("klf3")
     if request.method == "POST":
         email = request.data.get("email")
         password1 = request.data.get("password")
+        print("klf")
         user = custom_authenticate(email=email, password=password1)
+        print("kl")
         if user == 'NA':
             return JsonResponse({"error": "User account is not activated."},safe=False)
         if user is not None:
-            print(request.user.is_authenticated, 'signin1')
+            
             login(request, user)
-            print(request.user.is_authenticated,'signin2')
-            if user.login_times == 0:
-                user.login_times +=1
-                user.save()
-                
-                return JsonResponse({'message':"First login", 'email':user.email}, safe=False)
+            if user.is_staff==False:
+                if user.login_times == 0:
+                    user.login_times +=1
+                    user.save()
+                    
+                    return JsonResponse({'message':"First login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
+                else:
+                    user.login_times +=1
+                    user.save()
+                    return JsonResponse({'message':"login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
             else:
-                user.login_times +=1
-                user.save()
-                return JsonResponse({'message':"login", 'email':user.email}, safe=False)
+                return JsonResponse({'message':"login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
             
         else:
            return JsonResponse({"error": "Bad Credintials"},safe=False)
