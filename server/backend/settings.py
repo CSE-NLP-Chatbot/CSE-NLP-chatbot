@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import sys
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -32,12 +33,18 @@ EMAIL_PORT = os.environ.get("EMAIL_PORT")
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = "django-insecure-#w9x!zoq*)l4h_8-g7c36q6v6j*=jc=v)&l%^0zub$f_m%$qu$" #os.getenv('SECRET_KEY')
+
+SECRET_KEY_JWT=os.getenv('SECRET_KEY_JWT')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['localhost','10.0.2.2','127.0.0.1']
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, 'static')
+#     ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,19 +63,22 @@ INSTALLED_APPS = [
     'users',
     'database',
     'adminPanel',
-    'djoser',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
+    'chatbot',
+    'chat',
+    'rest_framework_swagger',
+    'rest_framework_jwt',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 MIDDLEWARE = [
-     'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -95,19 +105,51 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# # Database
+# # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# DATABASES = {
+#     "default": {
+#         # "ENGINE": 'django.db.backends.postgresql_psycopg2',
+#         # "NAME": os.getenv('DB_NAME'),
+#         # 'HOST': os.getenv('HOST'), # or the hostname where your MySQL server is running
+#         # 'PORT': '5432',
+#         # 'USER':os.getenv('USER'),
+#         # 'PASSWORD' :os.getenv('PASSWORD'), 
+#         "ENGINE": 'django.db.backends.mysql',
+#         "NAME": os.getenv('DB_NAME'),
+#         'HOST': 'localhost', # or the hostname where your MySQL server is running
+#         'PORT': '3306',
+#         'USER':os.getenv('USER'),
+#         'PASSWORD' :os.getenv('PASSWORD'),     # or the port on which your MySQL server is listening
 
-DATABASES = {
-    "default": {
-        "ENGINE":  'django.db.backends.mysql',
-        "NAME": 'chatbotDb',
-        'HOST': os.environ.get('HOST'),
-        'PORT': '3306', 
-        'USER':os.environ.get('USER'),
-        'PASSWORD' :os.environ.get('PASSWORD'),     
+if 'test' in sys.argv:
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'chatbotetest'
+        }
     }
-}
+else:
+    # Database
+    # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+    DATABASES = {
+        "default": {
+            "ENGINE": 'django.db.backends.postgresql_psycopg2',
+            "NAME": os.getenv('DB_NAME'),
+            'HOST': os.getenv('HOST'), # or the hostname where your MySQL server is running
+            'PORT': '5432',
+            'USER':os.getenv('APP_USER'),
+            'PASSWORD' :os.getenv('PASSWORD'),
+            # "ENGINE": 'django.db.backends.postgresql_psycopg2',
+            # "NAME": os.getenv('DB_NAME'),
+            # 'HOST': os.getenv('HOST'), # or the hostname where your MySQL server is running
+            # 'PORT': '5432',
+            # 'USER':os.getenv('APP_USER'),
+            # 'PASSWORD' :os.getenv('PASSWORD'), 
+            # "ENGINE": 'django.db.backends.mysql',
+            # "NAME": os.getenv('DB_NAME'),      
+        }
+    }
 
 
 # Password validation

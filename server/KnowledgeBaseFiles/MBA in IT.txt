@@ -1,0 +1,22 @@
+Plagiarism checking hansini
+The supervisor is responsible for checking the plagiarism.
+
+Supervisor should make sure that the student has checked plagiarism using the Turnitin plagiarism checking software provided by the UoM Library.
+
+Turnitin similarity report can be obtained from the Plagiarism Activity on Moodle.
+
+A copy of the complete plagiarism report should be sent to the examiners (together with the examinable thesis copy).
+
+The maximum allowable similarity index level for any thesis should be kept at or below 10% with the following parameters being set:
+
+Using a word count of 14
+
+Not excluding self-citations
+
+Not excluding quotations
+
+Excluding references, bibliography, table of contents and acknowledgements.
+
+In cases where the similarity index exceeds 10% and is below 40%, the supervisor should justify the high similarity index by completing this Justification form. In such situations, the Senate shall make its decision to accept thesis or not based on the recommendation of the examination panel.
+
+If the index is beyond 40%, the thesis will not be accepted.

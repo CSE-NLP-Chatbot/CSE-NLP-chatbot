@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from rest_framework.response import Response
+from rest_framework import status
 from django.http.response import JsonResponse
 from django.contrib.auth.hashers import check_password
 from django.http.response import Http404
@@ -10,11 +11,13 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
-from rest_framework.decorators import api_view, permission_classes
-from django.contrib.auth import login, logout, authenticate
+from rest_framework.decorators import api_view, renderer_classes
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
 from users.models import CustomUser
 from backend import settings
 from . tokens import generate_token
+import jwt,datetime
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
@@ -26,6 +29,7 @@ from rest_framework.authentication import TokenAuthentication
 
 
 @api_view(("POST",))
+@csrf_exempt
 def signup(request):
     print("iop")
     if request.method == "POST":
@@ -76,7 +80,15 @@ def signup(request):
             "Your Account has been created succesfully",
             safe=False,
         )
-
+    
+@api_view(["GET"])
+def get_user_role(request):
+    if request.user.is_authenticated:
+        user_role = request.user.user_type
+        return Response({"user_type": user_role}, status=status.HTTP_200_OK)
+    else:
+        return Response({"detail": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+    
 def custom_authenticate(email=None, password=None):
     try:
         user = CustomUser.objects.get(email=email)
@@ -108,6 +120,7 @@ def activate(request,uidb64,token):
 
 
 @api_view(("POST",))
+@csrf_exempt
 def signin(request):
     print("klf3")
     if request.method == "POST":
@@ -121,28 +134,47 @@ def signin(request):
         if user is not None:
             
             login(request, user)
-            if user.is_staff==False:
-                if user.login_times == 0:
-                    user.login_times +=1
-                    user.save()
-                    
-                    return JsonResponse({'message':"First login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
-                else:
-                    user.login_times +=1
-                    user.save()
-                    return JsonResponse({'message':"login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
+            payload={
+            'email':email,
+            'password':password1,
+            'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60),
+            'iat':datetime.datetime.utcnow()
+            }
+            token=jwt.encode(payload,settings.SECRET_KEY_JWT,algorithm='HS256')
+            if user.login_times == 0:
+                user.login_times +=1
+                res=Response()
+                res.data={ 
+                'message':'First Login, Logged in Successfully!!',
+                'email':user.email
+            }
             else:
-                return JsonResponse({'message':"login", 'email':user.email, 'isStaff':user.is_staff}, safe=False)
+                user.login_times +=1
+                user.save()
+                res=Response()
+                res.data={ 
+                'message':'Logged in Successfully!!',
+                'email':user.email}
+           
+            res.set_cookie(key='jwt',value=token,httponly=True) 
+            return res
+            
             
         else:
            return JsonResponse({"error": "Bad Credintials"},safe=False)
 
 
 @api_view(("GET",))
+@csrf_exempt
 def signout(request):
     if request.method == "GET":
+        response=Response()
+        response.delete_cookie('jwt')
+        response.data={
+            'message':'Logged out Successfully!!'
+        }
         logout(request)
-        return JsonResponse("Logged Out Sucessfully!!", safe=False)
+        return response
     
     
 @api_view(("PUT",))

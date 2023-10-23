@@ -1,0 +1,24 @@
+.responsive-image {
+    max-width: 100%; /* Set the maximum width to 100% of the parent container */
+    height: auto; /* Allow the height to adjust proportionally */
+  }
+  
+  /* Define different sizes for the images at various screen widths */
+  @media (max-width: 576px) { /* Small screens, adjust as needed */
+    .responsive-image {
+      max-width: 80%; /* Adjust the maximum width as desired */
+    }
+  }
+  
+  @media (min-width: 577px) and (max-width: 992px) { /* Medium screens, adjust as needed */
+    .responsive-image {
+      max-width: 60%; /* Adjust the maximum width as desired */
+    }
+  }
+  
+  @media (min-width: 993px) { /* Large screens, adjust as needed */
+    .responsive-image {
+      max-width: 50%; /* Adjust the maximum width as desired */
+    }
+  }
+  

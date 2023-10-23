@@ -22,6 +22,7 @@ const Feedbacks = () => {
   const [UpdateModalShow, setUpdateModalShow] = useState(false);
   const [feedbackType, setFeedbackType] = useState("All");
   const [isUpdated, setIsUpdated] = useState(false);
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     let mounted = true;
@@ -30,8 +31,14 @@ const Feedbacks = () => {
     }
     getfeedbacks().then((data) => {
       if (mounted) {
-        setFeedbacks(data);
+        if (data.status === false) {
+          setError(data.message);
+        } else {
+          setFeedbacks(data);
+        }
       }
+    }).catch((error) => {
+      setError("An error occurred while fetching feedbacks.");
     });
     return () => {
       mounted = false;
@@ -89,7 +96,12 @@ const Feedbacks = () => {
   return (
     <div className="body_div container-fluid side-container ">
       <div className="row side-row">
-        {feedbacks.length === 0 ? (
+        {/* {error ? ( <div className="error-message">
+            <h1 style={{ color: "white" }}>Unauthorized Access</h1>
+            <button onClick={() => setError(null)}>Dismiss</button>
+          </div>
+        ) : ( */}
+         {feedbacks.length === 0 ? (
           <h2 className="text-center" style={{ color: "white" }}>
             No feedbacks
           </h2>
@@ -198,7 +210,7 @@ const Feedbacks = () => {
               </tbody>
             </Table>
           </div>
-        )}
+        ) }
       </div>
     </div>
   );

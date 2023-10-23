@@ -169,9 +169,11 @@ var/
 
 # Installer logs
 pip-log.txt
-pip-delete-this-directory.txt
+pip-delete-this-directory
 
-# Unit test / coverage reports
+
+
+# Unit test / coverage reports,
 htmlcov/
 .tox/
 .coverage
@@ -216,7 +218,8 @@ celerybeat-schedule
 .env
 
 # Data files
-*.txt
+# *.txt
+*.pkl
 
 # virtualenv
 venv/

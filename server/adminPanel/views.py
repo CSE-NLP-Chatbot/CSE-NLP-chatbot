@@ -10,9 +10,14 @@ from  database.models import Feedback
 from  database.models import KnowledgeBase
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+import jwt,datetime
+from users.models import CustomUser
+from backend import settings
+from .decorators import require_admin_permission
+
+
 # Create your views here.
-
-
+@require_admin_permission
 @api_view(('GET','DELETE'))
 def get_feedback(request, feedback_id):
     if request.method=='GET':
@@ -33,13 +38,15 @@ def get_feedback(request, feedback_id):
             # Return a 404 response if the feedback does not exist
             return Response({"error": "Feedback Does Not Exist"},status=404)  
 
-            
+         
 @api_view(('GET',))
+@require_admin_permission
 def get_feedback_all(request):
     data = Feedback.objects.all()
     serializer = FeedbackSerializer(data, many=True)
     return Response(serializer.data)   
 
+@require_admin_permission
 @api_view(('GET','DELETE'))
 def get_feedbacks_by_feedback_type(request,feedback_type):
     if request.method=='GET':
@@ -59,7 +66,8 @@ def get_feedbacks_by_feedback_type(request,feedback_type):
         except Feedback.DoesNotExist:
             # Return a 404 response if no feedbacks of the specified type exist
             return Response({"error": "Feedbacks Do Not Exist for the Specified Type"}, status=status.HTTP_404_NOT_FOUND)
-    
+
+@require_admin_permission    
 @api_view(('GET','DELETE'))
 def get_feedback_type_feedback_id(request,feedback_id,feedback_type):
     if request.method=='GET':
@@ -82,6 +90,7 @@ def get_feedback_type_feedback_id(request,feedback_id,feedback_type):
             # Return a 404 response if the feedback does not exist
             return Response({"error": "Feedback Does Not Exist for the Specified Type id"},status=status.HTTP_404_NOT_FOUND)
 
+@require_admin_permission
 @api_view(('POST',))
 def update_knowledgebase(request):
      if request.method=='POST':
@@ -92,14 +101,14 @@ def update_knowledgebase(request):
             return JsonResponse("Update Information Added Successfully",safe=False)
         return JsonResponse("Failed to Add Update Information",safe=False)
 
-           
+@require_admin_permission          
 @api_view(('GET',))
 def get_knowledgebase_info_all(request):
     data = KnowledgeBase.objects.all()
     serializer = KnowledgeBaseSerializer(data, many=True)
     return Response(serializer.data)   
 
-
+@require_admin_permission
 @api_view(('GET','DELETE'))
 def get_knowledgebase_info(request, update_id):
     if request.method=='GET':
@@ -119,7 +128,8 @@ def get_knowledgebase_info(request, update_id):
         except Feedback.DoesNotExist:
             # Return a 404 response if the feedback does not exist
             return Response({"error": "Information Does Not Exist"},status=404)
-
+        
+@require_admin_permission
 @api_view(('POST',))
 def save_file(request):
     data = request.FILES.get('file')
