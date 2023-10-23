@@ -1,26 +1,48 @@
-import axios from 'axios';
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 export function getfeedbacks() {
-    return axios.get('http://127.0.0.1:8000/adminDashboard/')
-    .then(response => {
-      if (response.status === 200) {
-        return response.data;
-      }else{
-        console.log("Status 300"+response.data.message);
-        return {status: false, message: response.data.message};
-      }
-    }).catch(error => {
-      console.log(error);
-      return {status: false, message: error.message};
+  return axios
+    .get("http://localhost:8000/adminDashboard/", {
+      headers: {
+        Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      return { status: false, message: error.message };
     });
-};
+}
+
+export function get_userId() {
+  return axios
+    .get(`http://localhost:8000/token/`, {
+      headers: {
+        Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+      },
+    })
+    .then((response) => response.data);
+}
 
 export function get_feedbacks_by_feedback_type(feedback_type) {
-    return axios.get(`http://127.0.0.1:8000/adminDashboard/${feedback_type}/` )
-    .then(response => response.data)
-};
+  return axios
+    .get(`http://localhost:8000/adminDashboard/${feedback_type}/`, {
+      headers: {
+        Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+      },
+    })
+    .then((response) => response.data);
+}
 
 export function deleteFeedback(feedback_id) {
-  return axios.delete(`http://127.0.0.1:8000/adminDashboard/${feedback_id}`)
-    .then(response => response.data)
-  }
+  return axios
+    .delete(`http://localhost:8000/adminDashboard/${feedback_id}`, {
+      headers: {
+        Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+      },
+    })
+    .then((response) => response.data);
+}

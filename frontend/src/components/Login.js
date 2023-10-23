@@ -6,17 +6,17 @@ import './styles/style.css';
 import './styles/snippet.css';
 import logo from './images/CSEBOT.png';
 import background from './images/dep.png'; 
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [email,  setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [showfirstLoginAlert, setShowfirstLoginAlert] = useState(false);
   const [showBadCredentialsAlert, setShowBadCredentialsAlert] = useState(false);
   const [showNotActivatedAlert, setShowNotActivatedAlert] = useState(false);
-  // const [userLoggedEmail, setUserLoggedEmail] = useState('');
-
+  const [showAdminAlert, setShowAdminAlert] = useState(false);
 
   const getIsFormValid = () => {
     return validateEmail(email) && password.length >= 8;
@@ -27,20 +27,26 @@ const Login = () => {
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/login/', {
-        email,
-        password,
+        "email":email,
+        "password":password,
       });
+      console.log(response.data);
+      Cookies.set('jwt', response.data.jwt);
        const data=response.data;
+       console.log(data);
       if (data.message === "login") {
         // setUserLoggedEmail(data.email);
         // Save userEmail to local storage
+        // console.log(data.message);
         localStorage.setItem('userEmail', JSON.stringify(email));
         setShowLoginAlert(true);
-      }else if(data.message === "First login"){
+      }else if(data.message === "First Login"){
         // setUserLoggedEmail(data.email);
         // Save userEmail to local storage
         localStorage.setItem('userEmail', JSON.stringify(email));
         setShowfirstLoginAlert(true);
+      }else if(data.message === "admin"){
+        setShowAdminAlert(true);
       }else if(data.error === "Bad Credintials"){
         setShowBadCredentialsAlert(true);
       }else if(data.error === "User account is not activated."){
@@ -122,11 +128,11 @@ const Login = () => {
           {/* Account Activated Alert */}
           <div
             className={`modal modal-message modal-success fade ${
-              showLoginAlert| showfirstLoginAlert ? "show" : ""
+              showLoginAlert| showfirstLoginAlert|showAdminAlert ? "show" : ""
             }`}
             tabIndex='-1'
             role='dialog'
-            style={{ display: showLoginAlert|showfirstLoginAlert  ? "block" : "none" }}
+            style={{ display: showLoginAlert|showfirstLoginAlert|showAdminAlert ? "block" : "none" }}
           >
             <div className='modal-dialog'>
               <div className='modal-content'>
@@ -145,10 +151,12 @@ const Login = () => {
                     className='btn btn-success'
                     onClick={() => {
                       setShowLoginAlert(false);
-                      if(showfirstLoginAlert && !showLoginAlert){
+                      if(showfirstLoginAlert && !showLoginAlert && !showAdminAlert){
                         // navigate(`../editprofile/${userLoggedEmail}`);
                         navigate('../editprofile');
                         setShowfirstLoginAlert(false);
+                      }else if(showAdminAlert){
+                        navigate('../adminDashboard');
                       }else{navigate('../bot');}
                       
                     }}

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import logo from './images/CSEBOT.png';
+import { useLocation } from 'react-router-dom';
+import ChatHeader from './ChatHeader';
 import avatar from './images/default-avatar.png';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const NavBar2 = () => {
 
   const [Username, setUsername] = useState('');
   const [Avatar, setAvatar] = useState(avatar)
   const navigate = useNavigate();
+  const location = useLocation();
+  const sholudShowFeedback = location.pathname === '/bot';
 
   // Load user details from local storage when the component mounts
   useEffect(() => {
@@ -37,6 +42,7 @@ const NavBar2 = () => {
 
     // Redirect to the logout URL on the server-side
     const response = axios.get('http://127.0.0.1:8000/signout/');
+    Cookies.remove('jwt')
     navigate('../login');
   };
   return (
@@ -59,11 +65,14 @@ const NavBar2 = () => {
             src={logo}
             alt="Logo"
           />
-          <span className="text-white fs-1x font700">CSEBOT</span>
+          <span className="text-white fs-1x font700" style={{marginLeft: "10px"}}>CSEBOT</span>
         </a>
-
+      
         {/* Profile Dropdown */}
         <div className="nav-item dropdown user-dropdown">
+        <div style={{marginRight:'10px'}}>{
+            sholudShowFeedback && <ChatHeader/>
+       } </div>
           <img src={Avatar} width="50" alt="" className="img-fluid rounded-circle" />
           <strong ><span className="ml-2 mr-3 text-white" style={{ fontStyle: "revert", fontFamily:"sans-serif", marginLeft:'5px'}}>Hi, {Username}</span></strong>
           

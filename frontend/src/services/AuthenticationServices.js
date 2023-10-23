@@ -1,8 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 export function getUserRole() {
-    return axios.get('http://127.0.0.1:8000/userRole/', {
-        withCredentials: true,
-      })
-    .then(response => response.data)
-};
+  return axios
+    .get("http://localhost:8000/userRole/", {
+      // withCredentials: true,
+      headers: {
+        Authorization: Cookies.get('jwt') //the token is a variable which holds the token
+    }
+    })
+    .then((response) => response.data);
+}

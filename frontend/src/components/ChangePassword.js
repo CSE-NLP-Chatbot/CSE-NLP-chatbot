@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import background from './images/Robot.png';
 
 
 function ChangePassword() {
-
+  const navigate = useNavigate();
   const [userdetails, setuserdetails] = useState({
     currentPassword: "",
     newPassword: "",
@@ -72,7 +73,7 @@ function ChangePassword() {
       </div>
 
        {/* Adjust the height value above as needed style={{ height: 'calc(100vh - 100px)', paddingTop:'30px'}}*/}
-       <div className="main" style={{ height: 'calc(100vh - 100px)', paddingTop:'30px'}} onSubmit={handleSubmit}>
+       <div className="main" style={{ height: 'calc(120vh - 100px)', paddingTop:'30px'}} onSubmit={handleSubmit}>
           <div className="container mt-4">
             <div className="row">
               <div className="col-md-6">
@@ -167,6 +168,9 @@ function ChangePassword() {
                     className='btn btn-success'
                     onClick={() => {
                       setShowDetailsSavedAlert(false);
+                      if (showDetailsSavedAlert) {
+                        navigate("../bot");
+                      }
                     }}
                   >
                     OK

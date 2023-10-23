@@ -5,13 +5,11 @@ import Navbar from "react-bootstrap/Navbar";
 import "../navigation.css"
 
 const Navigation = () => {
-  const location = useLocation(); // Get the current location
-
   return (
     <div>
-      <Navbar expand="lg" className="navbar"  data-bs-theme="dark">
+      <Navbar expand="lg" className="navbar bg-dark"   data-bs-theme="dark">
         <Container>
-          <Link className="navbar-brand" to='/'>Admin Dashboard</Link>
+          <Link className="navbar-brand" to='/adminDashboard'>Admin Dashboard</Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto" >

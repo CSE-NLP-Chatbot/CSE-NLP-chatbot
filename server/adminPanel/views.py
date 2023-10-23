@@ -42,6 +42,7 @@ def get_feedback(request, feedback_id):
 @api_view(('GET',))
 @require_admin_permission
 def get_feedback_all(request):
+    print ("Inside feedbak", request.COOKIES.get('jwt'))
     data = Feedback.objects.all()
     serializer = FeedbackSerializer(data, many=True)
     return Response(serializer.data)   
@@ -104,6 +105,7 @@ def update_knowledgebase(request):
 @require_admin_permission          
 @api_view(('GET',))
 def get_knowledgebase_info_all(request):
+    print (request.COOKIES.get('jwt'))
     data = KnowledgeBase.objects.all()
     serializer = KnowledgeBaseSerializer(data, many=True)
     return Response(serializer.data)   

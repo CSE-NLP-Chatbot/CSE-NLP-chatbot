@@ -1,4 +1,15 @@
 import axios from "axios";
+import Cookies from 'js-cookie';
+
+export function getUser() {
+  return axios
+    .get("http://localhost:8000/user_ID", {
+      headers: {
+        Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+      },
+    })
+}
+
 
 // Function to get titles based on user_id.
 export async function get_conversation_title(user_ID) {
@@ -16,8 +27,11 @@ export async function get_conversation_title(user_ID) {
 export async function get_conversation_by_user_id(user_ID) {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/chat/${user_ID}/return_conversation/`
-    );
+      `http://127.0.0.1:8000/chat/${user_ID}/return_conversation/`,{
+        headers: {
+          Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+        },
+      });
     return response.data;
   } catch (error) {
     console.error(`Error fetching data: ${error}`);
@@ -30,7 +44,12 @@ export async function real_time_chat(user_ID, postObject) {
   try {
     const response = await axios.post(
       `http://127.0.0.1:8000/chat/${user_ID}/real_time/`,
-      postObject
+      postObject,
+      {
+        headers: {
+          Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -46,7 +65,12 @@ export async function submit_feedback(user_ID, postObject) {
   try {
     const response = await axios.post(
       `http://127.0.0.1:8000/user_feedback/${user_ID}/submit_feedback/`,
-      postObject
+      postObject,
+      {
+        headers: {
+          Authorization: Cookies.get("jwt"), //the token is a variable which holds the token
+        },
+      }
     );
     return response.data;
   } catch (error) {

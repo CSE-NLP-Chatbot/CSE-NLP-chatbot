@@ -1,5 +1,5 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "./App.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Feedbacks from "./components/Dashboard";
 import Navigation from "./components/Navigation";
 import Knowledgebase from "./components/Knowledgebase";
@@ -19,15 +19,17 @@ import EditProfile from './components/EditProfile';
 import Home from "./components/Home";
 import MailSuccess from "./components/MailSuccess";
 import React, { useState, useEffect } from "react";
+import ChatHeader from "./components/ChatHeader";
 
 const SubAPP = () => {
   // Get the current location using useLocation
   const location = useLocation();
   const [userRole, setUserRole] = useState(null);
+  
   useEffect(() => {
     getUserRole()
       .then((data) => {
-        setUserRole(data);
+        setUserRole(data.user_type);
         console.log(userRole);
       })
       .catch((error) => {
@@ -36,15 +38,18 @@ const SubAPP = () => {
   }, []);
 
   // Conditionally render the NavBar based on the current route
-  const shouldShowNavBar1 = location.pathname !== '/' && location.pathname !== '/changepassword' && location.pathname !== '/editprofile'&& location.pathname !== '/profile';
-  const shouldShowNavBar2 = location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/login' && location.pathname !== '/mailsuccess';
-  const shouldShowFooter = location.pathname !== '/';
+  const shouldShowNavBar1 = location.pathname !== '/' && location.pathname !== '/changepassword' && location.pathname !== '/bot' && location.pathname !== '/editprofile'&& location.pathname !== '/profile'&& location.pathname !== '/adminDashboard' && location.pathname !== '/adminDashboard/knowledgebase';
+  const shouldShowNavBar2 = location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/login' && location.pathname !== '/mailsuccess' && location.pathname !== '/adminDashboard'&& location.pathname !== '/adminDashboard/knowledgebase';
+  const adminDashboardNavBar= location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/login' && location.pathname !== '/mailsuccess' && location.pathname !== '/changepassword' && location.pathname !== '/bot' && location.pathname !== '/editprofile'&& location.pathname !== '/profile';
+  const shouldShowFooter = location.pathname !== '/' && location.pathname !== '/adminDashboard'&& location.pathname !== '/adminDashboard/knowledgebase';
 
   return (
     <div className='App'>
       {shouldShowNavBar1 && <NavBar /> } 
-      {userRole === "admin" ? <Navigation /> : shouldShowNavBar2 && <NavBar2 />}
+      {/* {shouldShowNavBar2 && <NavBar2 />} */}
+      {userRole === "admin" ? adminDashboardNavBar && <Navigation />: shouldShowNavBar2 && <NavBar2 />}
       <Routes>
+        {/* {userRole === "admin" ?  <Route exact path="/" element={<Feedbacks />} /> : <Route exact path="/" element={<Home/>} />} */}
         <Route exact path="/" element={<Home/>} />
         <Route exact path="mailsuccess" element={<MailSuccess />} />
         <Route exact path="signup" element={<Signup />} />
@@ -52,11 +57,12 @@ const SubAPP = () => {
         {/* <Route exact path="chatbot" element={<Login />} /> */}
         <Route exact path="changepassword" element={<ChangePassword />} />
         {/* <Route exact path="/editprofile/:Email" element={<EditProfile />} />  */}
-        <Route exact path="editprofile" element={<EditProfile />} /> 
-        <Route path="/" element={<ChatPage />} />
+        <Route exact path="editprofile" element={<EditProfile />} />
+        <Route exact path="addfeedback" element={<ChatHeader />} /> 
+        <Route path="bot" element={<ChatPage />} />
         <Route  path="/adminDashboard/knowledgebase" element={<Knowledgebase />} />
         <Route  path="/adminDashboard" element={<Feedbacks />} />
-        <Route exact path="/" element={<Feedbacks />} />
+       
       </Routes>
       {shouldShowFooter && <Footer />}
     </div>

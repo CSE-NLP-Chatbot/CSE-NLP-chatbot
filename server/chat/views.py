@@ -15,27 +15,35 @@ from users.models import CustomUser
 from django.http import JsonResponse
 import requests
 from django.conf import settings
+from chatbot import chain
 import os
 from dotenv import load_dotenv
 from django.views.decorators.csrf import csrf_exempt
+from .decorators import require_user_permission
+from rest_framework.decorators import api_view
 # import jwt
 
 
 # Create your views here.
 
+@csrf_exempt
+# @require_user_permission
+@api_view(['GET'])
+def get_Token(request):
+    token = request.COOKIES.get('jwt')
+    return JsonResponse({"token": token}, status=200)
 
 @csrf_exempt
 @api_view(['GET'])
+# @require_user_permission
 def get_userID(request):
-    pattern =r"b'(.*)'"
-    if request.COOKIES.get('jwt'):
-        token = re.search(pattern,request.COOKIES.get('jwt'))
+    if request.headers['Authorization']:
+        token = request.headers['Authorization']
     else:
         return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)
     
     if token:
         try:
-            token = token.group(1)
             payload = jwt.decode(token, settings.SECRET_KEY_JWT, algorithms=['HS256'])
             user = CustomUser.objects.filter(email=payload['email']).first()
             if user:
@@ -47,6 +55,7 @@ def get_userID(request):
     return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)    
 
 # Getting conversation titles.
+# @require_user_permission
 @api_view(['GET'])
 def get_conversation_title(request, user_ID ):
     if request.method=='GET': # can be removed.
@@ -63,6 +72,7 @@ def get_conversation_title(request, user_ID ):
 
     
 # Retriving all past conversation for each user
+# @require_user_permission
 @api_view(['GET'])
 def get_conversation_by_user_id(request,user_ID ):
     if request.method == 'GET':
@@ -77,9 +87,12 @@ def get_conversation_by_user_id(request,user_ID ):
         
 # the function to take response from AI bot. That takes question from user.
 def response_by_bot(question):
-    return "Welcome"
+    output = chain({"question": question}, return_only_outputs=True)
+    answer = output['answer']
+    return answer.strip('\n')
 
 # Receiving questions from chatpage
+# @require_user_permission
 @api_view(['POST'])
 def real_time_chat(request,user_ID):
     if request.method == 'POST':
@@ -97,6 +110,7 @@ def real_time_chat(request,user_ID):
         return Response('Invalid HTTP method !.', status=status.HTTP_400_BAD_REQUEST)
     
 # Receiving feedbacks from feedbackpage
+# @require_user_permission
 @api_view(['POST'])
 def user_feedback(request,user_ID):
     if request.method == 'POST':

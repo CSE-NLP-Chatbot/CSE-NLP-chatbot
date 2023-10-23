@@ -1,0 +1,104 @@
+Q: I have an academic matter. Who should I contact?
+
+A: Before contacting anyone, go to the LMS and see if whatever your request can be submitted through the LMS. If so, do that and read the email you get after you submit very carefully. Then act as instructed in that email. If you cannot find the thing you want to do in the LMS, carefully read the rest of this FAQ. And I mean "read" not "Ctrl+F" and search for the string you think to be your question. Because you might be thinking of a wrong string. So read the FAQ and see if the answer you need is here. If so, proceed as indicated. If and only if all those fail should you try to contact either the Semester Coordinator or the Academic Coordinator.  
+
+Q: Who are the semester coordinators of CSE department? (Valid as of 2023-03-23)
+
+A: See below for the list of semester coordinators.
+
+Semester 2 - Dr T. Uthayasanker, Dr Nisansa de Silva, Dr Sunimal Rathnayake, Dr Sandareka Wickramanayake 
+
+Semester 3 - Mrs Vishaka Nanayakkara, Dr. Buddhika Karunarathne
+
+Semester 4 - Dr Kutila Gunasekera
+
+Semester 5 - Prof. Dulani Meedeniya
+
+Industrial Training - Dr Adeesha Wijayasiri
+
+Semester 6 - Dr. Adeesha Wijayasiri
+
+Semesters 7, 8 and higher - Dr. Charith Chitraranjan
+
+Q: Who is the Academic coordinator of the CSE department?
+
+A: From December 2022, it is Dr Nisansa de Silva.
+
+Q: How do I apply for leave/register for a repeat module/submit an appeal?
+
+A: It should be done from LearnOrg (lms.uom.lk).  Check the UG Division website for further instructions.
+
+Q: How do I pay for repeat registration?
+
+A: Since the COVID-19 pandemic, Faculty of Engineering has not charged students for repeat registrations. (Valid as of 2023-03-23)
+
+Q: I was late to add/drop/withdraw etc my moodle registration. 
+
+A: You first look in the LMS. If the needed functionality is not there, fill out this form, get it signed, and submit it to the Academic Coordinator.  In the empty space below the module titles (or on an attached page if there is no space below the module titles), you need to write 1-2 sentences as to why you are making the request. Do NOT write a long essay. The FAC does not have time to read essays. 
+
+Q: I was late to register for a repeat module. What can I do now?
+
+A: If it is only for the WE component, you can register through LearnOrg (LMS) until the last day of the semester.
+
+If it is to repeat CA or the full module, you should submit a Late Repeat Registration form (PDF form available on UG Division website). To be honest, since the module is already in progress and you have missed that content, we should not allow it. So, after 2018 intake Semester 7, Late Repeats for CA/Full module will not be allowed. 
+
+Q: I am in semester n, and need to repeat a module in semester m (n>m). Who should sign my repeat registration form as semester coordinator? Is it the coordinator of semester n or m?
+
+A: Your current semester's coordinator (i.e. n) has to sign and recommend. 
+
+Q: I was sick for 3 months and couldn't attend University. What can I do?
+
+A: You can apply for medical leave for that duration and academic concession for the subjects you couldn't follow.
+
+Q: I was sick for several months and couldn't attend University. However, I managed to do some work. Can I apply for medical leave?
+
+A: Medical leave cannot be granted if you engaged in any academic activity during that period (For example, if you submitted an assignment, went on a field trip, or even represented University at the SLUG, then leave will not be granted.)
+
+Q: How do I fill/sign a PDF document?
+
+A: Really! If you expect us to answer that, then you don't deserve to be a CSE student.
+
+Q: I am sick and will miss the semester end exam. What should I do?
+
+A: If you missed an end-semester exam due to sickness, it is possible to request Academic Concession.
+
+The applicable Rules and Regulations are described in the Academic Procedures and By-Law 15 for Conduct at Examinations. (Regulation 15.1 – Procedure for Academic Concessions in the By-Law give details about the medical to be obtained, from where etc.)
+
+
+In summary, the steps are:
+
+Inform exam division within 1 week of exam.
+
+Obtain a valid Medical Certificate covering the period from either the University Medical Officer (UMO), or from a Qualified Medical Officer.
+
+Submit form AC01 "Application for Academic Concession for Examinations (on Medical Grounds)" to Examination Division with necessary medical evidence within 1 month of the exam. This form should be requested from the Examination Division. Form can be submitted via email to registration@uom.lk with a copy to sar-exams@uom.lk. 
+
+Q: I failed a module in semester m. It is also being offered in semester n. Can I repeat it in that module?
+
+A: If it is the same module (has the same module code), you can.
+
+Q: What is Academic Probation/Academic concession/Add/Drop/Withdraw etc. mean?
+
+A: These terms are important, and are defined in the Academic Procedures document (available from UG Division website).
+
+Q: Will a Withdraw affect my GPA or class?
+
+A:  As I am writing this, no. But refer to the performance criteria of your batch.  (Remember, anything on this site can be invalidated by the official documents)
+
+Q: I have submitted a request to the FAC through the Semester Coordinator and/or the Academic Coordinator. When will the Academic Coordinator or Semester Coordinator get back to me about what happened to my request? 
+
+A: Generally, never. Look at the Procedure for handling Student Requests. It is neither the Semester Coordinator nor the Academic Coordinator that informs you of the result. Emailing/meeting/calling/messaging them again and again for updates is pointless. All they can tell you is "I have done my part and forwarded it to the next level".  So, if you need to have a follow-up, do that follow-up according to the graph above. 
+
+Q: The question I have is not answered in this FAQ?
+
+A: You can try the following steps.
+
+Check the relevant documentation (Academic Procedures, By-Law...) on the UG Division website
+
+Ask your semester coordinator
+
+Ask the CSE department academic coordinator
+
+Ask the UG Division staff
+
+Ask the Director/UG Division

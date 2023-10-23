@@ -8,10 +8,8 @@ urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("activate/<uidb64>/<token>/", views.activate, name="activate"),
     path("login/", views.signin, name="login"),
-    path("signin/", views.signin, name="signin"),
+    # path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("editprofile/", views.editprofile, name="editprofile"),
     path("changepassword/", views.changepassword, name="changepassword"),
-    
-    path("changepassword/", views.changepassword, name="changepassword")
 ]

@@ -52,48 +52,66 @@ def signup(request):
         myuser = CustomUser.objects.create_user(email, password1)
         myuser.username = username
         myuser.is_active = False
-        if device == "mobile":
-            myuser.is_active = True
-            myuser.save()
-        else:
-            myuser.save()
-            print('Insignup',request.user.is_authenticated)
+        myuser.save()
+        print('Insignup',request.user.is_authenticated)
             # Email Address Confirmation Email
-            current_site = get_current_site(request)
-            email_subject = "Confirm your CSE ChatBot account!!"
-            message2 = render_to_string('email_template.html',{
-                'name': myuser.username,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(myuser.user_ID)),
-                'token': generate_token.make_token(myuser)
-            })
-            email = EmailMultiAlternatives(
-            email_subject,
-            strip_tags(message2),
-            settings.EMAIL_HOST_USER,
-            [myuser.email],
+        current_site = get_current_site(request)
+        email_subject = "Confirm your CSE ChatBot account!!"
+        message2 = render_to_string('email_template.html',{
+            'name': myuser.username,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(myuser.user_ID)),
+            'token': generate_token.make_token(myuser)
+        })
+        email = EmailMultiAlternatives(
+        email_subject,
+        strip_tags(message2),
+        settings.EMAIL_HOST_USER,
+        [myuser.email],
             )
-            email.attach_alternative(message2,'text/html')
-            email.fail_silently = True
-            email.send()
+        email.attach_alternative(message2,'text/html')
+        email.fail_silently = True
+        email.send()
         return JsonResponse(
             "Your Account has been created succesfully",
             safe=False,
         )
     
+@csrf_exempt    
 @api_view(["GET"])
 def get_user_role(request):
-    if request.user.is_authenticated:
-        user_role = request.user.user_type
-        return Response({"user_type": user_role}, status=status.HTTP_200_OK)
+    print("inside user role")
+    if request.headers['Authorization']:
+        token = request.headers['Authorization']
+        print(token)
     else:
-        return Response({"detail": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+        return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)
+    if token:
+            try:
+                payload = jwt.decode(token, settings.SECRET_KEY_JWT, algorithms=['HS256'])
+                user = CustomUser.objects.filter(email=payload['email']).first()
+                return JsonResponse({"user_type": user.user_type}, status=200)
+            except jwt.exceptions.DecodeError:
+                return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)
+            except jwt.ExpiredSignatureError:
+                return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)
+        
+    return JsonResponse({"error": "You are not authorized to access this resource"}, status=401)
+    # if request.user.is_staff:
+    #     user_role = request.user.user_type
+    #     return Response({"user_type": user_role}, status=status.HTTP_200_OK)
+    # else:
+    #     return Response({"detail": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
     
 def custom_authenticate(email=None, password=None):
     try:
+        # print(email,password)
         user = CustomUser.objects.get(email=email)
+        # print("user is",user)
         if check_password(password, user.password):
+            print("password is correct")
             if user.is_active:
+                print("user is active")
                 return user
             return "NA"
         return None
@@ -122,41 +140,53 @@ def activate(request,uidb64,token):
 @api_view(("POST",))
 @csrf_exempt
 def signin(request):
-    print("klf3")
     if request.method == "POST":
+        print(request.data)
         email = request.data.get("email")
         password1 = request.data.get("password")
-        print("klf")
+        # print(email,password1, 'signin')
         user = custom_authenticate(email=email, password=password1)
-        print("kl")
+       
         if user == 'NA':
             return JsonResponse({"error": "User account is not activated."},safe=False)
         if user is not None:
-            
+            print("Before login")
             login(request, user)
+            print("After login")
             payload={
             'email':email,
             'password':password1,
             'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60),
             'iat':datetime.datetime.utcnow()
             }
+            print("After Payload")
             token=jwt.encode(payload,settings.SECRET_KEY_JWT,algorithm='HS256')
-            if user.login_times == 0:
-                user.login_times +=1
+            print("Token is",token)
+            if user.is_staff == True:
+                print ("Staff")
                 res=Response()
                 res.data={ 
-                'message':'First Login, Logged in Successfully!!',
-                'email':user.email
-            }
+                    'message':'admin',
+                    'email':user.email
+                }
             else:
-                user.login_times +=1
-                user.save()
-                res=Response()
-                res.data={ 
-                'message':'Logged in Successfully!!',
-                'email':user.email}
-           
-            res.set_cookie(key='jwt',value=token,httponly=True) 
+                print ("STudent")
+                if user.login_times == 0:
+                    user.login_times +=1
+                    user.save()
+                    res=Response()
+                    res.data={ 
+                    'message':'First Login',
+                    'email':user.email
+                    }
+                else:
+                    user.login_times +=1
+                    user.save()
+                    res=Response()
+                    res.data={ 
+                    'message':'login',
+                    'email':user.email}
+            res.data['jwt']=token
             return res
             
             
@@ -218,7 +248,6 @@ def changepassword(request):
             return JsonResponse("Password is too short", safe=False)
         
         user = custom_authenticate(email=email, password=currentPassword)
-
         if user is not None:
             user.set_password(newPassword)
             user.save()
