@@ -25,7 +25,8 @@ const Feedbacks = () => {
   const [UpdateModalShow, setUpdateModalShow] = useState(false);
   const [feedbackType, setFeedbackType] = useState("All");
   const [isUpdated, setIsUpdated] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); 
+
 
   useEffect(() => {
     let mounted = true;
@@ -105,7 +106,8 @@ const Feedbacks = () => {
             <button onClick={() => setError(null)}>Dismiss</button>
           </div>
         ) : ( */}
-         { feedbacks.length === 0 ? (
+
+         {feedbacks.length === 0 ? (
           <h2 className="text-center" style={{ color: "white" }}>
             No feedbacks
           </h2>

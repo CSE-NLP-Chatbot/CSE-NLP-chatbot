@@ -23,6 +23,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="ChatBot APIS",
@@ -42,7 +43,6 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('', include('chat.urls')),
     path('', include('chatbot.urls'))
-
 ]
 
 urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

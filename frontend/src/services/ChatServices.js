@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
-
 export function getUser() {
   return axios
     .get("http://localhost:8000/user_ID", {

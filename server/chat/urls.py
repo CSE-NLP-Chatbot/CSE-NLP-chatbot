@@ -11,4 +11,5 @@ urlpatterns = [
      path('generate_azure_token/', views.generate_azure_token, name='generate-azure-token'),
      path('user_ID/', views.get_userID, name='get_user_ID'),
      path("token/", views.get_Token, name="get_token"),
+
 ]
